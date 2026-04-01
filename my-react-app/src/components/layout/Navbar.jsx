@@ -10,7 +10,7 @@ const Navbar = () => {
     <header className="navbar">
       <div className="container navbar-content">
         <Link to="/" className="logo">
-          Пончиковая 24/7
+          Ща все сделаем
         </Link>
 
         <nav className="nav-links">

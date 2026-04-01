@@ -23,7 +23,7 @@ const ProductDetailsPage = () => {
         const data = await getProductById(id);
         setProduct(data);
       } catch (error) {
-        setError(error.message || "Failed to load product");
+        setError(error.message || "Не удалось загрузить товар");
       } finally {
         setLoading(false);
       }
@@ -36,7 +36,7 @@ const ProductDetailsPage = () => {
     if (!product) return;
 
     addToCart(product);
-    setSuccessMessage("Product added to cart");
+    setSuccessMessage("Товар добавлен в корзину");
 
     setTimeout(() => {
       setSuccessMessage("");
@@ -46,8 +46,8 @@ const ProductDetailsPage = () => {
   if (loading) {
     return (
       <section>
-        <h1>Product Details</h1>
-        <Loader text="Loading product..." />
+        <h1>Подробности товара</h1>
+        <Loader text="Загрузка товара..." />
       </section>
     );
   }
@@ -55,7 +55,7 @@ const ProductDetailsPage = () => {
   if (error) {
     return (
       <section>
-        <h1>Product Details</h1>
+        <h1>Подробности товара</h1>
         <p className="message error-message">{error}</p>
       </section>
     );
@@ -64,8 +64,8 @@ const ProductDetailsPage = () => {
   if (!product) {
     return (
       <section>
-        <h1>Product Details</h1>
-        <p>Product not found.</p>
+        <h1>Подробности товара</h1>
+        <p>Товар не найден.</p>
       </section>
     );
   }
@@ -85,14 +85,14 @@ const ProductDetailsPage = () => {
           <p className="product-category">{product.category}</p>
           <p className="product-description">{product.description}</p>
           <p className="product-price">{product.price} ₸</p>
-          <p className="product-stock">In stock: {product.stock}</p>
+          <p className="product-stock">В наличии: {product.stock}</p>
 
           {successMessage && (
             <p className="message success-message">{successMessage}</p>
           )}
 
           <button className="primary-btn add-cart-btn" onClick={handleAddToCart}>
-            Add to Cart
+            Добавить в корзину
           </button>
         </div>
       </div>

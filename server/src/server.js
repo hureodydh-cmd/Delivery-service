@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import app from "./app.js";
+import seedProducts from "./data/seedProducts.js";
 
 dotenv.config();
 
@@ -9,8 +10,10 @@ const MONGO_URI = process.env.MONGO_URI;
 
 mongoose
   .connect(MONGO_URI)
-  .then(() => {
+  .then(async () => {
     console.log("MongoDB connected");
+
+    await seedProducts();
 
     app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);

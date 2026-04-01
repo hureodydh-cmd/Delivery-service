@@ -5,7 +5,7 @@ const AdminRoute = ({ children }) => {
   const { user, authLoading, isAuthenticated } = useAuth();
 
   if (authLoading) {
-    return <p>Loading...</p>;
+    return <p>Загрузка...</p>;
   }
 
   if (!isAuthenticated) {

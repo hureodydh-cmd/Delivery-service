@@ -10,6 +10,14 @@ export const getImageUrl = (imagePath) => {
     return imagePath;
   }
 
+  if (imagePath.startsWith("/uploads")) {
+    return `${SERVER_BASE_URL}${imagePath}`;
+  }
+
+  if (imagePath.startsWith("/")) {
+    return imagePath;
+  }
+
   return `${SERVER_BASE_URL}${imagePath}`;
 };
 

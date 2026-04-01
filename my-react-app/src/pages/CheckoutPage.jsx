@@ -21,10 +21,10 @@ const CheckoutPage = () => {
   if (!isAuthenticated) {
     return (
       <section>
-        <h1>Checkout</h1>
-        <p>You need to log in before placing an order.</p>
+        <h1>Оформление заказа</h1>
+        <p>Для оформления заказа необходимо войти в систему.</p>
         <Link to="/login" className="details-link">
-          Go to Login
+          Войти
         </Link>
       </section>
     );
@@ -33,10 +33,10 @@ const CheckoutPage = () => {
   if (cartItems.length === 0) {
     return (
       <section>
-        <h1>Checkout</h1>
-        <p>Your cart is empty. Add products before checkout.</p>
+        <h1>Оформление заказа</h1>
+        <p>Ваша корзина пуста. Добавьте товары перед оформлением заказа.</p>
         <Link to="/catalog" className="details-link">
-          Go to Catalog
+          В каталог
         </Link>
       </section>
     );
@@ -55,7 +55,7 @@ const CheckoutPage = () => {
     setSuccess("");
 
     if (!formData.deliveryAddress || !formData.phone) {
-      setError("Please fill in delivery address and phone");
+      setError("Пожалуйста, заполните адрес доставки и телефон");
       return;
     }
 
@@ -76,14 +76,14 @@ const CheckoutPage = () => {
 
       await createOrder(orderPayload);
 
-      setSuccess("Order placed successfully");
+      setSuccess("Заказ оформлен успешно");
       clearCart();
 
       setTimeout(() => {
         navigate("/profile/orders");
       }, 1200);
     } catch (error) {
-      setError(error.message || "Failed to place order");
+      setError(error.message || "Не удалось оформить заказ");
     } finally {
       setLoading(false);
     }
@@ -91,28 +91,28 @@ const CheckoutPage = () => {
 
   return (
     <section className="checkout-section">
-      <h1>Checkout</h1>
-      <p>Fill in your delivery information to complete the order.</p>
+      <h1>Оформление заказа</h1>
+      <p>Заполните данные доставки, чтобы завершить оформление заказа.</p>
 
       <div className="checkout-layout">
         <form className="checkout-form" onSubmit={handleSubmit}>
           <label>
-            Delivery address
+            Адрес доставки
             <input
               type="text"
               name="deliveryAddress"
-              placeholder="Enter delivery address"
+              placeholder="Введите адрес доставки"
               value={formData.deliveryAddress}
               onChange={handleChange}
             />
           </label>
 
           <label>
-            Phone number
+            Номер телефона
             <input
               type="text"
               name="phone"
-              placeholder="Enter phone number"
+              placeholder="Введите номер телефона"
               value={formData.phone}
               onChange={handleChange}
             />
@@ -122,7 +122,7 @@ const CheckoutPage = () => {
           {success && <p className="message success-message">{success}</p>}
 
           <button type="submit" className="primary-btn" disabled={loading}>
-            {loading ? "Placing order..." : "Place Order"}
+            {loading ? "Оформление заказа..." : "Оформить заказ"}
           </button>
         </form>
 

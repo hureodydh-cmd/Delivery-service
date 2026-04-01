@@ -37,7 +37,7 @@ const AdminProductsPage = () => {
       const data = await getAllProducts();
       setProducts(data);
     } catch (error) {
-      setError(error.message || "Failed to load products");
+      setError(error.message || "Не удалось загрузить товары");
     } finally {
       setLoading(false);
     }
@@ -129,16 +129,16 @@ const AdminProductsPage = () => {
 
       if (editingId) {
         await updateProduct(editingId, payload);
-        setSuccess("Product updated successfully");
+        setSuccess("Товар обновлён");
       } else {
         await createProduct(payload);
-        setSuccess("Product created successfully");
+        setSuccess("Товар создан");
       }
 
       resetForm();
       fetchProducts();
     } catch (error) {
-      setError(error.message || "Failed to save product");
+      setError(error.message || "Не удалось сохранить товар");
     } finally {
       setSubmitting(false);
       setUploadingImage(false);
@@ -146,7 +146,7 @@ const AdminProductsPage = () => {
   };
 
   const handleDelete = async (id) => {
-    const confirmed = window.confirm("Delete this product?");
+    const confirmed = window.confirm("Удалить этот товар?");
 
     if (!confirmed) {
       return;
@@ -165,20 +165,20 @@ const AdminProductsPage = () => {
 
       fetchProducts();
     } catch (error) {
-      setError(error.message || "Failed to delete product");
+      setError(error.message || "Не удалось удалить товар");
     }
   };
 
   return (
     <section>
-      <h1>Admin Products</h1>
-      <p>Create, edit and delete products for the catalog.</p>
+      <h1>Управление товарами</h1>
+      <p>Создавайте, редактируйте и удаляйте товары в каталоге.</p>
 
       <form className="admin-form" onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
-          placeholder="Product title"
+          placeholder="Название товара"
           value={formData.title}
           onChange={handleChange}
         />
@@ -186,7 +186,7 @@ const AdminProductsPage = () => {
         <input
           type="text"
           name="description"
-          placeholder="Description"
+          placeholder="Описание"
           value={formData.description}
           onChange={handleChange}
         />
@@ -194,7 +194,7 @@ const AdminProductsPage = () => {
         <input
           type="number"
           name="price"
-          placeholder="Price"
+          placeholder="Цена"
           value={formData.price}
           onChange={handleChange}
         />
@@ -202,7 +202,7 @@ const AdminProductsPage = () => {
         <input
           type="text"
           name="category"
-          placeholder="Category"
+          placeholder="Категория"
           value={formData.category}
           onChange={handleChange}
         />
@@ -210,7 +210,7 @@ const AdminProductsPage = () => {
         <input
           type="number"
           name="stock"
-          placeholder="Stock"
+          placeholder="Остаток"
           value={formData.stock}
           onChange={handleChange}
         />
@@ -218,13 +218,13 @@ const AdminProductsPage = () => {
         <input
           type="text"
           name="image"
-          placeholder="Or paste image URL manually"
+          placeholder="Или вставьте URL изображения вручную"
           value={formData.image}
           onChange={handleChange}
         />
 
         <div className="file-upload-block">
-          <label className="file-label">Upload product image</label>
+          <label className="file-label">Загрузить изображение товара</label>
           <input
             type="file"
             accept=".jpg,.jpeg,.png,.webp"
@@ -234,7 +234,7 @@ const AdminProductsPage = () => {
 
         {previewUrl && (
           <div className="image-preview-box">
-            <p>Image preview:</p>
+            <p>Предварительный просмотр:</p>
             <img src={previewUrl} alt="Preview" className="image-preview" />
           </div>
         )}
@@ -249,14 +249,14 @@ const AdminProductsPage = () => {
             disabled={submitting || uploadingImage}
           >
             {uploadingImage
-              ? "Uploading image..."
+              ? "Загрузка изображения..."
               : submitting
               ? editingId
-                ? "Updating..."
-                : "Creating..."
+                ? "Сохраняем..."
+                : "Создаём..."
               : editingId
-              ? "Update Product"
-              : "Create Product"}
+              ? "Обновить товар"
+              : "Создать товар"}
           </button>
 
           {editingId && (
@@ -265,25 +265,25 @@ const AdminProductsPage = () => {
               className="secondary-btn"
               onClick={resetForm}
             >
-              Cancel Edit
+              Отменить
             </button>
           )}
         </div>
       </form>
 
-      {loading && <p>Loading products...</p>}
+      {loading && <p>Загрузка товаров...</p>}
 
       {!loading && (
         <div className="admin-table-wrapper">
           <table className="admin-table">
             <thead>
               <tr>
-                <th>Image</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Actions</th>
+                <th>Изображение</th>
+                <th>Название</th>
+                <th>Категория</th>
+                <th>Цена</th>
+                <th>Остаток</th>
+                <th>Действия</th>
               </tr>
             </thead>
 
@@ -306,13 +306,13 @@ const AdminProductsPage = () => {
                       className="primary-btn small-btn"
                       onClick={() => handleEdit(product)}
                     >
-                      Edit
+                      Изменить
                     </button>
                     <button
                       className="danger-btn small-btn"
                       onClick={() => handleDelete(product._id)}
                     >
-                      Delete
+                      Удалить
                     </button>
                   </td>
                 </tr>

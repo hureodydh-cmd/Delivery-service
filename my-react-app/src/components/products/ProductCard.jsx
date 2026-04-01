@@ -19,18 +19,18 @@ const ProductCard = ({ product }) => {
         <p className="product-category">{product.category}</p>
         <p className="product-description">{product.description}</p>
         <p className="product-price">{product.price} ₸</p>
-        <p className="product-stock">In stock: {product.stock}</p>
+        <p className="product-stock">В наличии: {product.stock}</p>
 
         <div className="product-card-actions">
           <button
             className="primary-btn"
             onClick={() => addToCart(product)}
           >
-            Add to Cart
+            Добавить в корзину
           </button>
 
           <Link to={`/products/${product._id}`} className="details-link">
-            View Details
+            Подробнее
           </Link>
         </div>
       </div>

@@ -4,13 +4,13 @@ const NotFoundPage = () => {
   return (
     <section className="not-found-page">
       <h1>404</h1>
-      <p>The page you are looking for does not exist.</p>
+      <p>Страница не найдена.</p>
       <div className="not-found-actions">
         <Link to="/" className="primary-btn">
-          Go Home
+          На главную
         </Link>
         <Link to="/catalog" className="secondary-btn">
-          Open Catalog
+          В каталог
         </Link>
       </div>
     </section>

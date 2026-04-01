@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
 const EmptyState = ({
-  title = "Nothing here yet",
-  text = "No data available.",
+  title = "Пусто",
+  text = "Здесь пока нет данных.",
   buttonText,
   buttonLink,
 }) => {

@@ -5,6 +5,14 @@ import Loader from "../components/ui/Loader";
 import EmptyState from "../components/ui/EmptyState";
 import { getMyOrders } from "../services/orderService";
 
+const statusLabels = {
+  processing: "В обработке",
+  delivered: "Доставлен",
+  cancelled: "Отменён",
+};
+
+const getStatusLabel = (status) => statusLabels[status] || status;
+
 const MyOrdersPage = () => {
   const { isAuthenticated, user } = useAuth();
 
@@ -26,7 +34,7 @@ const MyOrdersPage = () => {
         const data = await getMyOrders();
         setOrders(Array.isArray(data) ? data : []);
       } catch (error) {
-        setError(error.message || "Failed to load orders");
+        setError(error.message || "Не удалось загрузить заказы");
       } finally {
         setLoading(false);
       }
@@ -38,26 +46,26 @@ const MyOrdersPage = () => {
   if (!isAuthenticated) {
     return (
       <section>
-        <h1>My Orders</h1>
-        <p>You need to log in to view your orders.</p>
-        <Link to="/login">Go to Login</Link>
+        <h1>Мои заказы</h1>
+        <p>Вам нужно войти, чтобы просмотреть свои заказы.</p>
+        <Link to="/login">Войти</Link>
       </section>
     );
   }
 
   return (
     <section>
-      <h1>My Orders</h1>
-      <p>Welcome, {user?.name}. Here is your order history.</p>
+      <h1>Мои заказы</h1>
+      <p>Добро пожаловать, {user?.name}. Здесь история ваших заказов.</p>
 
-      {loading && <Loader text="Loading orders..." />}
+      {loading && <Loader text="Загрузка заказов..." />}
       {error && <p className="message error-message">{error}</p>}
 
       {!loading && !error && orders.length === 0 && (
         <EmptyState
-          title="No orders yet"
-          text="You have not placed any orders yet."
-          buttonText="Go to Catalog"
+          title="Заказов пока нет"
+          text="Вы ещё не оформили ни одного заказа."
+          buttonText="В каталог"
           buttonLink="/catalog"
         />
       )}
@@ -67,15 +75,15 @@ const MyOrdersPage = () => {
           {orders.map((order) => (
             <article key={order._id} className="order-card">
               <div className="order-card-header">
-                <h3>Order #{order._id.slice(-6)}</h3>
+                <h3>Заказ №{order._id.slice(-6)}</h3>
                 <span className={`order-status status-${order.status}`}>
-                  {order.status}
+                  {getStatusLabel(order.status)}
                 </span>
               </div>
 
-              <p><strong>Address:</strong> {order.deliveryAddress}</p>
-              <p><strong>Phone:</strong> {order.phone}</p>
-              <p><strong>Total:</strong> {order.totalPrice} ₸</p>
+              <p><strong>Адрес:</strong> {order.deliveryAddress}</p>
+              <p><strong>Телефон:</strong> {order.phone}</p>
+              <p><strong>Итого:</strong> {order.totalPrice} ₸</p>
 
               <div className="order-items">
                 {(Array.isArray(order.items) ? order.items : []).map((item, index) => (

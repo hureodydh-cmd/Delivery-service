@@ -19,7 +19,7 @@ const CatalogPage = () => {
         const data = await getAllProducts();
         setProducts(Array.isArray(data) ? data : []);
       } catch (error) {
-        setError(error.message || "Failed to load products");
+        setError(error.message || "Не удалось загрузить товары");
       } finally {
         setLoading(false);
       }
@@ -56,14 +56,14 @@ const CatalogPage = () => {
         />
       </div>
 
-      {loading && <Loader text="Loading products..." />}
+      {loading && <Loader text="Загрузка товаров..." />}
       {error && <p className="message error-message">{error}</p>}
 
       {!loading && !error && filteredProducts.length === 0 && (
         <EmptyState
-          title="No products found"
-          text="Try another search or add products from the admin panel."
-          buttonText="Go Home"
+          title="Товары не найдены"
+          text="Попробуйте другой запрос или добавьте товары в админке."
+          buttonText="На главную"
           buttonLink="/"
         />
       )}

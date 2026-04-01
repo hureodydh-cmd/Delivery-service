@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { getAllOrders, updateOrderStatus } from "../../services/orderService";
 
+const statusLabels = {
+  processing: "В обработке",
+  delivered: "Доставлен",
+  cancelled: "Отменён",
+};
+
+const getStatusLabel = (status) => statusLabels[status] || status;
+
 const AdminOrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +23,7 @@ const AdminOrdersPage = () => {
       const data = await getAllOrders();
       setOrders(data);
     } catch (error) {
-      setError(error.message || "Failed to load orders");
+      setError(error.message || "Не удалось загрузить заказы");
     } finally {
       setLoading(false);
     }
@@ -31,47 +39,47 @@ const AdminOrdersPage = () => {
       setSuccess("");
 
       await updateOrderStatus(orderId, newStatus);
-      setSuccess("Order status updated");
+      setSuccess("Статус заказа обновлён");
       fetchOrders();
     } catch (error) {
-      setError(error.message || "Failed to update order status");
+      setError(error.message || "Не удалось обновить статус заказа");
     }
   };
 
   return (
     <section>
-      <h1>Admin Orders</h1>
-      <p>Manage customer orders and delivery statuses.</p>
+      <h1>Управление заказами</h1>
+      <p>Управляйте заказами клиентов и статусами доставки.</p>
 
       {error && <p className="message error-message">{error}</p>}
       {success && <p className="message success-message">{success}</p>}
 
-      {loading && <p>Loading orders...</p>}
+      {loading && <p>Загрузка заказов...</p>}
 
-      {!loading && orders.length === 0 && <p>No orders found.</p>}
+      {!loading && orders.length === 0 && <p>Заказы не найдены.</p>}
 
       {!loading && orders.length > 0 && (
         <div className="orders-list">
           {orders.map((order) => (
             <article key={order._id} className="order-card">
               <div className="order-card-header">
-                <h3>Order #{order._id.slice(-6)}</h3>
+                <h3>Заказ #{order._id.slice(-6)}</h3>
                 <span className={`order-status status-${order.status}`}>
-                  {order.status}
+                  {getStatusLabel(order.status)}
                 </span>
               </div>
 
               <p>
-                <strong>Customer:</strong> {order.user?.name} ({order.user?.email})
+                <strong>Покупатель:</strong> {order.user?.name} ({order.user?.email})
               </p>
               <p>
-                <strong>Address:</strong> {order.deliveryAddress}
+                <strong>Адрес:</strong> {order.deliveryAddress}
               </p>
               <p>
-                <strong>Phone:</strong> {order.phone}
+                <strong>Телефон:</strong> {order.phone}
               </p>
               <p>
-                <strong>Total:</strong> {order.totalPrice} ₸
+                <strong>Итого:</strong> {order.totalPrice} ₸
               </p>
 
               <div className="order-items">
@@ -90,19 +98,19 @@ const AdminOrdersPage = () => {
                   className="primary-btn small-btn"
                   onClick={() => handleStatusChange(order._id, "processing")}
                 >
-                  Processing
+                  В обработке
                 </button>
                 <button
                   className="primary-btn small-btn"
                   onClick={() => handleStatusChange(order._id, "delivered")}
                 >
-                  Delivered
+                  Доставлен
                 </button>
                 <button
                   className="danger-btn small-btn"
                   onClick={() => handleStatusChange(order._id, "cancelled")}
                 >
-                  Cancel
+                  Отменить
                 </button>
               </div>
             </article>

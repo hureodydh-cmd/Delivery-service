@@ -16,11 +16,11 @@ const CartPage = () => {
   if (!Array.isArray(cartItems) || cartItems.length === 0) {
     return (
       <section>
-        <h1>Cart</h1>
+        <h1>Корзина</h1>
         <EmptyState
-          title="Your cart is empty"
-          text="Add some products from the catalog before checkout."
-          buttonText="Go to Catalog"
+          title="Ваша корзина пуста"
+          text="Добавьте товары из каталога перед оформлением заказа."
+          buttonText="Перейти в каталог"
           buttonLink="/catalog"
         />
       </section>
@@ -30,9 +30,9 @@ const CartPage = () => {
   return (
     <section>
       <div className="cart-header">
-        <h1>Cart</h1>
+        <h1>Корзина</h1>
         <button className="danger-btn" onClick={clearCart}>
-          Clear Cart
+          Очистить корзину
         </button>
       </div>
 
@@ -75,7 +75,7 @@ const CartPage = () => {
                 className="danger-btn small-btn"
                 onClick={() => removeFromCart(item._id)}
               >
-                Remove
+                Удалить
               </button>
             </div>
           </article>
@@ -83,9 +83,9 @@ const CartPage = () => {
       </div>
 
       <div className="cart-summary">
-        <h2>Total: {totalPrice} ₸</h2>
+        <h2>Итого: {totalPrice} ₸</h2>
         <Link to="/checkout" className="primary-btn checkout-link">
-          Proceed to Checkout
+          Оформить заказ
         </Link>
       </div>
     </section>

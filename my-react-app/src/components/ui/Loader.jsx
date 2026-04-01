@@ -1,4 +1,4 @@
-const Loader = ({ text = "Loading..." }) => {
+const Loader = ({ text = "Загрузка..." }) => {
   return (
     <div className="loader-box">
       <div className="spinner"></div>
